@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <!-- Prevent zooming -->
     <title>Checkout - Simple E-commerce</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -51,6 +51,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin: 20px;
+            overflow: auto; /* Allow scroll if content is too tall */
         }
 
         .product-image {
@@ -80,7 +81,7 @@
             justify-content: space-between;
             width: 100%;
             max-width: 400px;
-            margin-top: 20px;
+            margin-top: auto; /* Push buttons to the bottom */
         }
 
         .button-container button {
@@ -234,8 +235,9 @@
             const productId = localStorage.getItem('productId');
             const product = products.find(p => p.id == productId);
             const message = product ? product.telegramMessage : 'I would like to know more about your product.';
-            window.open(`https://telegram.me/share/url?url=${encodeURIComponent(message)}`, '_blank');
+            window.open(`https://telegram.me/share/url?text=${encodeURIComponent(message)}`);
         }
     </script>
+
 </body>
 </html>
