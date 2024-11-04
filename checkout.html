@@ -3,256 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Simple E-commerce</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Checkout</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #f5f5f5;
             color: #333;
             padding: 20px;
-            margin: 0;
         }
-
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .checkout-container {
-            background-color: white;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
         h2 {
             margin-bottom: 20px;
-            font-size: 1.5em;
-            text-align: center;
-            color: #007bff;
         }
-
-        .product {
+        .product-details {
+            background-color: white;
             padding: 15px;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
-
-        .product:last-child {
-            border-bottom: none; /* Remove border from last product */
+        .product-details h3 {
+            margin-bottom: 10px;
         }
-
-        .product img {
-            max-width: 100px;
-            border-radius: 5px;
-            margin-right: 20px;
+        .total-price {
+            font-size: 1.5em;
+            font-weight: bold;
         }
-
-        .product h3 {
-            margin: 0;
-            font-size: 1.2em;
-            color: #333;
-        }
-
-        .product p {
-            margin: 5px 0;
-            color: #666;
-        }
-
-        .description-list {
-            margin: 10px 0;
-            list-style-type: disc;
-            padding-left: 20px;
-        }
-
-        .btn {
+        button {
+            padding: 10px 20px;
             background-color: #007bff;
             color: white;
-            padding: 12px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 20px;
-            width: 100%;
-            font-size: 1em;
-            transition: background-color 0.3s;
         }
-
-        .btn:hover {
+        button:hover {
             background-color: #0056b3;
-        }
-
-        .social-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .social-button {
-            flex: 1;
-            margin: 0 5px;
-            text-align: center;
-        }
-
-        .social-button a {
-            display: block;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-
-        .social-button a:hover {
-            background-color: #0056b3;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #777;
-        }
-
-        .social-button i {
-            display: block;
-            font-size: 1.5em;
-            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Checkout</h1>
-    </header>
-
-    <div class="checkout-container" id="checkout-container">
-        <h2>Detail Pembelian</h2>
-        <div class="product" id="product-detail">
-            <!-- Product details will be displayed here -->
-        </div>
-
-        <button class="btn" id="payment-button">Selesaikan Pembayaran</button>
-
-        <div class="social-buttons" id="social-buttons">
-            <div class="social-button" id="telegram-button">
-                <a href="#" target="_blank">
-                    <i class="fab fa-telegram-plane"></i>
-                    Telegram
-                </a>
-            </div>
-            <div class="social-button" id="testimoni-button">
-                <a href="#" target="_blank">
-                    <i class="fas fa-comment-dots"></i>
-                    Testimoni
-                </a>
-            </div>
-            <div class="social-button" id="whatsapp-button">
-                <a href="#" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                    WhatsApp
-                </a>
-            </div>
-            
-            <div class="product" id="produk1">
-            <img src="https://via.placeholder.com/200" alt="Product 1">
-            <h3>Product Name</h3>
-            <button>
-                <i class="fas fa-shopping-cart"></i> $29.99
-            </button>
-            
-        </div>
-        </div>
+    <h2>Checkout</h2>
+    <div class="product-details">
+        <h3 id="product-name"></h3>
+        <p>Price: <span id="product-price"></span></p>
     </div>
 
-    <div id="no-product" style="display: none; text-align: center; margin-top: 20px;">
-        <i class="fas fa-exclamation-circle" style="font-size: 50px; color: red;"></i>
-        <p>Tidak ada produk yang dipilih.</p>
-        <button onclick="goBack()" class="btn">Kembali</button>
-    </div>
+    <p class="total-price">Total: <span id="total-price"></span></p>
 
-    <footer>
-        <p>&copy; 2024 Simple E-commerce. All rights reserved.</p>
-    </footer>
+    <button onclick="completePurchase()">Complete Purchase</button>
 
     <script>
-        const products = {
-            productid1: {
-                id: "prod1",
-                name: "Product 1",
-                description: "Ini adalah deskripsi untuk Product 1.",
-                details: ["Detail 1.1", "Detail 1.2", "Detail 1.3"],
-                image: "https://via.placeholder.com/220?text=Product+1",
-                telegramLink: "https://t.me/product1",
-                testimoniLink: "https://yourwebsite.com/testimoni1",
-                whatsappLink: "https://wa.me/yourwhatsappnumber1"
-            },
-            productid2: {
-                id: "prod2",
-                name: "Product 2",
-                description: "Ini adalah deskripsi untuk Product 2.",
-                details: ["Detail 2.1", "Detail 2.2", "Detail 2.3"],
-                image: "https://via.placeholder.com/220?text=Product+2",
-                telegramLink: "https://t.me/product2",
-                testimoniLink: "https://yourwebsite.com/testimoni2",
-                whatsappLink: "https://wa.me/yourwhatsappnumber2"
-            },
-            productid3: {
-                id: "prod3",
-                name: "Product 3",
-                description: "Ini adalah deskripsi untuk Product 3.",
-                details: ["Detail 3.1", "Detail 3.2", "Detail 3.3"],
-                image: "https://via.placeholder.com/220?text=Product+3",
-                telegramLink: "https://t.me/product3",
-                testimoniLink: "https://yourwebsite.com/testimoni3",
-                whatsappLink: "https://wa.me/yourwhatsappnumber3"
-            }
-        };
+        document.addEventListener("DOMContentLoaded", function() {
+            // Retrieve product details from local storage
+            const productName = localStorage.getItem('productName');
+            const productPrice = localStorage.getItem('productPrice');
 
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
+            // Update the DOM with product details
+            document.getElementById('product-name').innerText = productName;
+            document.getElementById('product-price').innerText = `$${parseFloat(productPrice).toFixed(2)}`;
+            document.getElementById('total-price').innerText = `$${parseFloat(productPrice).toFixed(2)}`;
+        });
 
-        function goBack() {
-            window.history.back();
-        }
-
-        const productId = getQueryParam('id'); // Changed from 'id' to 'productId' based on your previous example
-        if (productId && products[productId]) {
-            const product = products[productId];
-            const detailsList = product.details.map(detail => `<li>${detail}</li>`).join('');
-
-            document.getElementById('product-detail').innerHTML = `
-                <img src="${product.image}" alt="${product.name}">
-                <div>
-                    <h3>${product.name}</h3>
-                    <p>${product.description}</p>
-                    <h4>Product ID: ${product.id}</h4>
-                    <ul class="description-list">${detailsList}</ul>
-                </div>
-            `;
-
-            document.getElementById('telegram-button').children[0].href = product.telegramLink;
-            document.getElementById('testimoni-button').children[0].href = product.testimoniLink;
-            document.getElementById('whatsapp-button').children[0].href = product.whatsappLink;
-        } else {
-            document.getElementById('checkout-container').style.display = 'none';
-            document.getElementById('no-product').style.display = 'block';
+        function completePurchase() {
+            alert("Thank you for your purchase!");
+            // Clear local storage after purchase
+            localStorage.removeItem('productName');
+            localStorage.removeItem('productPrice');
+            // Redirect to home or another page if needed
+            window.location.href = 'index.html';
         }
     </script>
-
 </body>
 </html>
