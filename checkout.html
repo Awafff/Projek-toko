@@ -90,15 +90,15 @@
         /* Button Container */
         .button-container {
             display: flex;
-            flex-direction: column; /* Stack buttons vertically */
-            width: 100%; /* Full width */
-            max-width: 400px; /* Maximum width */
+            justify-content: space-between;
+            width: 100%;
+            max-width: 400px;
             margin-top: 10px; /* Space above buttons */
         }
 
         .button-container button {
-            flex: 1; /* Allow buttons to grow */
-            margin: 5px 0; /* Space between buttons */
+            flex: 1;
+            margin: 0 5px;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -106,7 +106,6 @@
             color: white;
             cursor: pointer;
             transition: background-color 0.3s;
-            width: 100%; /* Full width */
         }
 
         .button-container button:hover {
@@ -233,8 +232,8 @@
         function openWhatsApp() {
             const productId = localStorage.getItem('productId');
             const product = products.find(p => p.id == productId);
-            const message = product ? product.whatsappMessage : 'I would like to know more about your product.';
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`);
+            const message = product ? product.whatsappMessage : 'I am interested in your product.';
+            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`);
         }
 
         function openTestimonials() {
