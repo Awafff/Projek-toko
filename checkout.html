@@ -3,75 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+    <title>Checkout - Simple E-commerce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
             color: #333;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
-        h2 {
-            margin-bottom: 20px;
-        }
-        .product-details {
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .product-details h3 {
-            margin-bottom: 10px;
-        }
-        .total-price {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        button {
-            padding: 10px 20px;
+
+        /* Header */
+        header {
             background-color: #007bff;
             color: white;
-            border: none;
-            border-radius: 5px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        h1 {
+            font-size: 1.5em;
+        }
+
+        .back-button {
             cursor: pointer;
         }
-        button:hover {
+
+        /* Checkout Container */
+        .checkout-container {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        .product-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .product-name, .product-price {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            margin: 20px 0;
+        }
+
+        .product-description h3 {
+            margin-bottom: 10px;
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button-container button:hover {
             background-color: #0056b3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        footer p {
+            margin: 5px 0;
         }
     </style>
 </head>
 <body>
 
-    <h2>Checkout</h2>
-    <div class="product-details">
-        <h3 id="product-name"></h3>
-        <p>Price: <span id="product-price"></span></p>
+    <header>
+        <div class="back-button" onclick="window.history.back()">
+            <i class="fas fa-arrow-left" style="font-size: 1.5em;"></i>
+        </div>
+        <h1>Checkout</h1>
+    </header>
+
+    <div class="checkout-container">
+        <img src="https://via.placeholder.com/600" alt="Product Image" class="product-image" id="product-image">
+        <div class="product-name" id="product-name"></div>
+        <div class="product-price" id="product-price"></div>
+        <div class="product-description">
+            <h3>Product Description:</h3>
+            <ul id="product-description"></ul>
+        </div>
+        <div class="button-container">
+            <button onclick="openWhatsApp()">WhatsApp</button>
+            <button onclick="openTestimonials()">Testimonials</button>
+            <button onclick="openTelegram()">Telegram</button>
+        </div>
     </div>
 
-    <p class="total-price">Total: <span id="total-price"></span></p>
-
-    <button onclick="completePurchase()">Complete Purchase</button>
+    <footer>
+        <p>&copy; 2023 Simple E-commerce</p>
+    </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Retrieve product details from local storage
-            const productName = localStorage.getItem('productName');
-            const productPrice = localStorage.getItem('productPrice');
+        const products = [
+            {
+                id: 1,
+                name: 'Product 1',
+                price: 29.99,
+                image: 'https://via.placeholder.com/600',
+                description: ['Feature 1 for Product 1', 'Feature 2 for Product 1', 'Feature 3 for Product 1'],
+                whatsappMessage: 'Hi, I am interested in Product 1 for $29.99. Can you provide more details?',
+                testimonialsLink: 'https://example.com/testimonials/product1',
+                telegramMessage: 'I would like to know more about Product 1 priced at $29.99.'
+            },
+            {
+                id: 2,
+                name: 'Product 2',
+                price: 39.99,
+                image: 'https://via.placeholder.com/600',
+                description: ['Feature 1 for Product 2', 'Feature 2 for Product 2', 'Feature 3 for Product 2'],
+                whatsappMessage: 'Hi, I am interested in Product 2 for $39.99. Can you provide more details?',
+                testimonialsLink: 'https://example.com/testimonials/product2',
+                telegramMessage: 'I would like to know more about Product 2 priced at $39.99.'
+            },
+            {
+                id: 3,
+                name: 'Product 3',
+                price: 19.99,
+                image: 'https://via.placeholder.com/600',
+                description: ['Feature 1 for Product 3', 'Feature 2 for Product 3', 'Feature 3 for Product 3'],
+                whatsappMessage: 'Hi, I am interested in Product 3 for $19.99. Can you provide more details?',
+                testimonialsLink: 'https://example.com/testimonials/product3',
+                telegramMessage: 'I would like to know more about Product 3 priced at $19.99.'
+            },
+            {
+                id: 4,
+                name: 'Product 4',
+                price: 49.99,
+                image: 'https://via.placeholder.com/600',
+                description: ['Feature 1 for Product 4', 'Feature 2 for Product 4', 'Feature 3 for Product 4'],
+                whatsappMessage: 'Hi, I am interested in Product 4 for $49.99. Can you provide more details?',
+                testimonialsLink: 'https://example.com/testimonials/product4',
+                telegramMessage: 'I would like to know more about Product 4 priced at $49.99.'
+            },
+            {
+                id: 5,
+                name: 'Product 5',
+                price: 24.99,
+                image: 'https://via.placeholder.com/600',
+                description: ['Feature 1 for Product 5', 'Feature 2 for Product 5', 'Feature 3 for Product 5'],
+                whatsappMessage: 'Hi, I am interested in Product 5 for $24.99. Can you provide more details?',
+                testimonialsLink: 'https://example.com/testimonials/product5',
+                telegramMessage: 'I would like to know more about Product 5 priced at $24.99.'
+            },
+        ];
 
-            // Update the DOM with product details
-            document.getElementById('product-name').innerText = productName;
-            document.getElementById('product-price').innerText = `$${parseFloat(productPrice).toFixed(2)}`;
-            document.getElementById('total-price').innerText = `$${parseFloat(productPrice).toFixed(2)}`;
+        document.addEventListener('DOMContentLoaded', function() {
+            const productId = localStorage.getItem('productId');
+            const product = products.find(p => p.id == productId);
+
+            if (product) {
+                document.getElementById('product-name').innerText = product.name;
+                document.getElementById('product-price').innerText = `$${product.price.toFixed(2)}`;
+                document.getElementById('product-image').src = product.image;
+
+                const productDescription = document.getElementById('product-description');
+                productDescription.innerHTML = '';
+                product.description.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.textContent = feature;
+                    productDescription.appendChild(li);
+                });
+            } else {
+                document.getElementById('product-name').innerText = 'Product Not Found';
+                document.getElementById('product-price').innerText = '$0.00';
+            }
         });
 
-        function completePurchase() {
-            alert("Thank you for your purchase!");
-            // Clear local storage after purchase
-            localStorage.removeItem('productName');
-            localStorage.removeItem('productPrice');
-            // Redirect to home or another page if needed
-            window.location.href = 'index.html';
+        function openWhatsApp() {
+            const productId = localStorage.getItem('productId');
+            const product = products.find(p => p.id == productId);
+            const message = product ? product.whatsappMessage : 'I am interested in your product.';
+            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`);
+        }
+
+        function openTestimonials() {
+            const productId = localStorage.getItem('productId');
+            const product = products.find(p => p.id == productId);
+            const testimonialsLink = product ? product.testimonialsLink : '#';
+            window.open(testimonialsLink, '_blank');
+        }
+
+        function openTelegram() {
+            const productId = localStorage.getItem('productId');
+            const product = products.find(p => p.id == productId);
+            const message = product ? product.telegramMessage : 'I would like to know more about your product.';
+            window.open(`https://telegram.me/share/url?url=${encodeURIComponent(message)}`);
         }
     </script>
 </body>
