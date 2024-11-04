@@ -349,7 +349,7 @@
                     </button>
                 `;
                 productDiv.addEventListener("click", () => {
-                    window.location.href = `checkout.html?productId=${product.id}`; // Redirect to checkout
+                    window.location.href = `checkout.html?productId${product.id}`; // Redirect to checkout
                 });
                 productsContainer.appendChild(productDiv);
             });
@@ -376,7 +376,7 @@
                     </button>
                 `;
                 productDiv.addEventListener("click", () => {
-    window.location.href = `checkout.html?productId=${product.id}`; // Redirect to checkout with product ID
+    window.location.href = `checkout.html?productId${product.id}`; // Redirect to checkout with product ID
 });
 
                 productsContainer.appendChild(productDiv);
@@ -384,5 +384,5 @@
         }
     </script>
 </body>
-  </html>
-      
+    </html>
+    
