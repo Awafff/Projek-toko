@@ -146,7 +146,7 @@
                 id: 1,
                 name: 'Product 1',
                 price: 29.99,
-                image: 'https://via.placeholder.com/600',
+                image: 'https://via.placeholder.com/600?text=Product+1',
                 description: ['Feature 1 for Product 1', 'Feature 2 for Product 1', 'Feature 3 for Product 1'],
                 whatsappMessage: 'Hi, I am interested in Product 1 for $29.99. Can you provide more details?',
                 testimonialsLink: 'https://example.com/testimonials/product1',
@@ -156,7 +156,7 @@
                 id: 2,
                 name: 'Product 2',
                 price: 39.99,
-                image: 'https://via.placeholder.com/600',
+                image: 'https://via.placeholder.com/600?text=Product+2',
                 description: ['Feature 1 for Product 2', 'Feature 2 for Product 2', 'Feature 3 for Product 2'],
                 whatsappMessage: 'Hi, I am interested in Product 2 for $39.99. Can you provide more details?',
                 testimonialsLink: 'https://example.com/testimonials/product2',
@@ -166,7 +166,7 @@
                 id: 3,
                 name: 'Product 3',
                 price: 19.99,
-                image: 'https://via.placeholder.com/600',
+                image: 'https://via.placeholder.com/600?text=Product+3',
                 description: ['Feature 1 for Product 3', 'Feature 2 for Product 3', 'Feature 3 for Product 3'],
                 whatsappMessage: 'Hi, I am interested in Product 3 for $19.99. Can you provide more details?',
                 testimonialsLink: 'https://example.com/testimonials/product3',
@@ -176,7 +176,7 @@
                 id: 4,
                 name: 'Product 4',
                 price: 49.99,
-                image: 'https://via.placeholder.com/600',
+                image: 'https://via.placeholder.com/600?text=Product+4',
                 description: ['Feature 1 for Product 4', 'Feature 2 for Product 4', 'Feature 3 for Product 4'],
                 whatsappMessage: 'Hi, I am interested in Product 4 for $49.99. Can you provide more details?',
                 testimonialsLink: 'https://example.com/testimonials/product4',
@@ -186,7 +186,7 @@
                 id: 5,
                 name: 'Product 5',
                 price: 24.99,
-                image: 'https://via.placeholder.com/600',
+                image: 'https://via.placeholder.com/600?text=Product+5',
                 description: ['Feature 1 for Product 5', 'Feature 2 for Product 5', 'Feature 3 for Product 5'],
                 whatsappMessage: 'Hi, I am interested in Product 5 for $24.99. Can you provide more details?',
                 testimonialsLink: 'https://example.com/testimonials/product5',
@@ -234,7 +234,7 @@
             const productId = localStorage.getItem('productId');
             const product = products.find(p => p.id == productId);
             const message = product ? product.telegramMessage : 'I would like to know more about your product.';
-            window.open(`https://telegram.me/share/url?url=${encodeURIComponent(message)}`);
+            window.open(`https://telegram.me/share/url?url=${encodeURIComponent(message)}`, '_blank');
         }
     </script>
 </body>
