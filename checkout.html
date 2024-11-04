@@ -46,7 +46,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start; /* Align items to the left */
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -62,13 +62,25 @@
             margin-bottom: 15px;
         }
 
-        .product-name, .product-price {
+        .product-name {
             font-size: 1.5em;
             margin-bottom: 10px;
+            text-align: left; /* Align to left */
+            width: 100%; /* Take full width */
+        }
+
+        .product-price {
+            font-size: 1.5em;
+            margin-top: auto; /* Push to the bottom */
+            margin-bottom: 10px; /* Margin from bottom */
+            text-align: left; /* Align to left */
+            width: 100%; /* Take full width */
         }
 
         .product-description {
             margin: 20px 0;
+            text-align: left; /* Align to left */
+            width: 100%; /* Take full width */
         }
 
         .product-description h3 {
@@ -81,7 +93,7 @@
             justify-content: space-between;
             width: 100%;
             max-width: 400px;
-            margin-top: auto; /* Push buttons to the bottom */
+            margin-top: 10px; /* Space above buttons */
         }
 
         .button-container button {
@@ -125,11 +137,11 @@
     <div class="checkout-container">
         <img src="https://via.placeholder.com/600" alt="Product Image" class="product-image" id="product-image">
         <div class="product-name" id="product-name"></div>
-        <div class="product-price" id="product-price"></div>
         <div class="product-description">
             <h3>Product Description:</h3>
             <ul id="product-description"></ul>
         </div>
+        <div class="product-price" id="product-price"></div>
         <div class="button-container">
             <button onclick="openWhatsApp()">WhatsApp</button>
             <button onclick="openTestimonials()">Testimonials</button>
@@ -228,7 +240,7 @@
             const productId = localStorage.getItem('productId');
             const product = products.find(p => p.id == productId);
             const testimonialsLink = product ? product.testimonialsLink : '#';
-            window.open(testimonialsLink, '_blank');
+            window.open(testimonialsLink);
         }
 
         function openTelegram() {
